@@ -18,6 +18,8 @@ type of build etc.
 
 ## PostgreSQL
 
+### Tensorflow
+
 We need to configure PostgreSQL in order to run Tensorflow. This consists of a
 couple of steps:
 
@@ -36,6 +38,12 @@ macOS:
    ```
    
 It should then be possible to create pl/python3 functions in PostgreSQL.
+
+### Apache Madlib
+
+Some examples use Apache MADLib instead of Tensorflow. See the documentation on
+the [MADLib Confluence page](https://cwiki.apache.org/confluence/display/MADLIB/Installation+Guide).
+
 
 ## Scripts
 
@@ -81,7 +89,7 @@ input variables (in pl/pgsql):
 
  z := cbrt((a * b) / (sin(c) * sqrt(d)) + (e * e * e));
  
- ### housing.sql
+ ### tf-housing.sql
  
  This is based on the well known [Boston Housing dataset](https://www.cs.toronto.edu/~delve/data/boston/bostonDetail.html).
  The SQL file contains the definition for a table to hold the data (loading it
@@ -89,3 +97,8 @@ input variables (in pl/pgsql):
  a model. This function differs from other in that Pandas data frames are used
  in place of Numpy, and an attempt is made to remove rows container outliers 
  from the dataset before training, in order to increase accuracy of results.
+ 
+ ### ml-housing.sql
+ 
+ This script implements the same regression analysis as *tf-housing.sql*, except
+ that it uses Apache MADLib instead of Tensorflow.
