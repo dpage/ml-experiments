@@ -17,10 +17,6 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)
 
-# Setup the plot layout
-plot_columns = 5
-plot_rows = ceil(len(columns) / plot_columns)
-
 # Create the data sets
 rows = plpy.execute(data_source_sql)
 
@@ -36,6 +32,10 @@ if len(columns) < 2:
 
 # Create the dataframe
 data = pd.DataFrame.from_records(rows, columns = columns)
+
+# Setup the plot layout
+plot_columns = 5
+plot_rows = ceil(len(columns) / plot_columns)
 
 # High level info
 plpy.notice('{} Analysis\n         {}=========\n'.format(output_name.capitalize(), '=' * len(output_name)))
