@@ -1,2 +1,4 @@
+.idea
 *.h5
 *.json
+*.pkl
