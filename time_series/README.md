@@ -5,7 +5,7 @@ Linear Trend Analysis is a common option, but this only allows you to predict
 the general trend of the data. Using a WaveNet model architecture we can predict
 data with trends and seasonality traits.
 
-There are two scripts in this directory:
+There are various scripts in this directory:
 
 ## cnn-demo.py
 
@@ -21,3 +21,12 @@ own test data, it will read a data set from *activity.csv* and learn and predict
 based on that data. *activity.csv* was created by logging the number of rows in
 *pg_stat_activity* on a PostgreSQL server every five minutes, whilst a workload
 generator was running against the system, simulating user activity.
+
+## arima-tsp.py
+
+This tests predictions using (S)ARIMA functionality provided by the pmdarima
+Python library.
+
+## prophet-tsp.py
+
+This tests predictions using Facebook's Prophet Python library.
