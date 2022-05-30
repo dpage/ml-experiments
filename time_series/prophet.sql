@@ -45,10 +45,21 @@ CREATE OR REPLACE FUNCTION public.create_model(
 AS $BODY$
 import json
 import os
+import pathlib
 import sys
 import pandas as pd
 from prophet import Prophet
 from prophet.serialize import model_to_json
+
+# Make sure we do not try to write outside of our directory
+try:
+    pathlib.Path(
+        os.path.abspath(
+            os.path.join('models', model_name + '.json')
+        )
+    ).relative_to(os.path.abspath('models'))
+except ValueError:
+    plpy.error('Invalid model name: {}'.format(model_name))
 
 # Check for an existing model
 model_file = os.path.abspath(os.path.join('models', model_name + '.json'))
@@ -112,12 +123,21 @@ CREATE OR REPLACE FUNCTION public.delete_model(
     VOLATILE PARALLEL UNSAFE
 AS $BODY$
 import os
+import pathlib
 import sys
+
+# Make sure we do not try to write outside of our directory
+try:
+    pathlib.Path(
+        os.path.abspath(
+            os.path.join('models', model_name + '.json')
+        )
+    ).relative_to(os.path.abspath('models'))
+except ValueError:
+    plpy.error('Invalid model name: {}'.format(model_name))
 
 # Check for an existing model
 model_file = os.path.abspath(os.path.join('models', model_name + '.json'))
-
-# FIXME: Make sure this cannot escape from the models directory
 
 if not os.path.exists(model_file):
     plpy.error('Model {} does not exist.'.format(model_file))
@@ -157,15 +177,24 @@ CREATE OR REPLACE FUNCTION public.predict(
 AS $BODY$
 import json
 import os
+import pathlib
 import sys
 import pandas as pd
 from prophet import Prophet
 from prophet.serialize import model_from_json
 
+# Make sure we do not try to write outside of our directory
+try:
+    pathlib.Path(
+        os.path.abspath(
+            os.path.join('models', model_name + '.json')
+        )
+    ).relative_to(os.path.abspath('models'))
+except ValueError:
+    plpy.error('Invalid model name: {}'.format(model_name))
+
 # Check for an existing model
 model_file = os.path.abspath(os.path.join('models', model_name + '.json'))
-
-# FIXME: Make sure this cannot escape from the models directory
 
 if not os.path.exists(model_file):
     plpy.error('Model {} does not exist.'.format(model_file))
@@ -219,6 +248,7 @@ CREATE OR REPLACE FUNCTION public.update_model(
 AS $BODY$
 import json
 import os
+import pathlib
 import sys
 import pandas as pd
 from prophet import Prophet
@@ -233,10 +263,18 @@ def init_stan(m):
     return res
 
 
+# Make sure we do not try to write outside of our directory
+try:
+    pathlib.Path(
+        os.path.abspath(
+            os.path.join('models', model_name + '.json')
+        )
+    ).relative_to(os.path.abspath('models'))
+except ValueError:
+    plpy.error('Invalid model name: {}'.format(model_name))
+
 # Check for an existing model
 model_file = os.path.abspath(os.path.join('models', model_name + '.json'))
-
-# FIXME: Make sure this cannot escape from the models directory
 
 if not os.path.exists(model_file):
     plpy.error('Model {} does not exist.'.format(model_file))
