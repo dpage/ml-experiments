@@ -234,7 +234,7 @@ Returns set of records:
     ts: The timestamp of the prediction.
     y: The predicted value.
     y_lower: The lower confidence bound of the predicted value.
-    y_upper: The lower confidence bound of the predicted value.
+    y_upper: The upper confidence bound of the predicted value.
     ';
 
 
