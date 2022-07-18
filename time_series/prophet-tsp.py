@@ -33,10 +33,12 @@ forecast = m.predict(future)
 
 # Plot
 fig, axes = plt.subplots(figsize=(10, 5), dpi=100, tight_layout=True)
-plt.plot(data['ds'][100000:], data['y'][100000:])
-plt.plot(forecast['ds'], forecast['yhat'])
+plt.plot(data['ds'][100000:], data['y'][100000:], label='Historic Data')
+plt.plot(forecast['ds'], forecast['yhat'], label='Forecast Data')
 plt.fill_between(forecast['ds'],
                  forecast['yhat_lower'],
                  forecast['yhat_upper'],
-                 color='k', alpha=.15)
+                 color='k', alpha=.25, label='Confidence')
+axes.legend(loc='upper left', fontsize=10)
 plt.show()
+# plt.savefig('prophet.png')

@@ -77,11 +77,12 @@ upper_series = pd.Series(confint[:, 1], index=index_of_fc)
 
 # Plot
 fig, axes = plt.subplots( figsize=(10, 5), dpi=100, tight_layout=True)
-plt.plot(data)
-plt.plot(fitted_series, color='darkgreen')
+plt.plot(data, label='Historic Data')
+plt.plot(fitted_series, color='darkgreen', label='Forecast Data')
 plt.fill_between(lower_series.index,
                  lower_series,
                  upper_series,
-                 color='k', alpha=.15)
+                 color='k', alpha=.15, label='Confidence')
+plt.legend(loc='upper left', fontsize=10)
 
 plt.show()
